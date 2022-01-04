@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/mitchellh/ioprogress"
 	"github.com/sirupsen/logrus"
@@ -54,9 +55,10 @@ func DLURL(url, name, shastring string, size int64) error {
 	}
 	l.Infof("downloading")
 	progressR := &ioprogress.Reader{
-		Reader:   resp.Body,
-		Size:     size,
-		DrawFunc: drawProgressLogrus(url),
+		Reader:       resp.Body,
+		Size:         size,
+		DrawFunc:     drawProgressLogrus(url),
+		DrawInterval: 5 * time.Second,
 	}
 	written, err := io.Copy(out, progressR)
 	if err != nil {

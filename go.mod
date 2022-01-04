@@ -3,7 +3,6 @@ module github.com/oberlademeister/installgo
 go 1.17
 
 require (
-	github.com/davecgh/go-spew v1.1.1
 	github.com/mitchellh/ioprogress v0.0.0-20180201004757-6a23b12fa88e
 	github.com/sirupsen/logrus v1.8.1
 	github.com/urfave/cli/v2 v2.3.0
