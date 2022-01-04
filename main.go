@@ -16,9 +16,10 @@ const DLURLBase = "https://go.dev/dl/"
 
 func main() {
 	app := &cli.App{
-		Name:   "goinstall",
-		Usage:  "install golang form main repo into ./go",
-		Action: run,
+		Name:    "installgo",
+		Usage:   "install go form main repo into ./go",
+		Version: version,
+		Action:  run,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:    "ddir",
@@ -94,8 +95,8 @@ func run(c *cli.Context) error {
 			}
 		}
 	}
-	if dDir == "" {
-		return fmt.Errorf("need a destination directory")
+	if dDir == "" && !noUnpack {
+		return fmt.Errorf("need a destination directory unloss noUnpack is set")
 	}
 	dDir, err = filepath.Abs(filepath.Clean(dDir))
 	if err != nil {
@@ -108,6 +109,9 @@ func run(c *cli.Context) error {
 		"nounpack":   noUnpack,
 		"os":         goos,
 		"arch":       goarch,
+		"version":    version,
+		"commit":     commit,
+		"date":       date,
 	}).Infof("startup")
 
 	logrus.Infof("retrieving download information")
